@@ -8,6 +8,11 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- 用户信息权限 -->
+    <uses-permission android:name="cybertech.permission.READ_PSTORE_USERINFO"/>
+    <!-- 位置信息权限 -->
+    <uses-permission android:name="cybertech.permission.READ_PSTORE_LOCATIONINFO"/>
+
     <!-- 支持多种分辨率-->
     <supports-screens
         android:smallScreens="true"
@@ -15,10 +20,10 @@
         android:largeScreens="true"
         android:resizeable="true"
         android:anyDensity="true" />
-    <!-- NFC -->
-    <uses-permission android:name="android.permission.NFC" />
-    <!-- 要求当前设备必须要有NFC芯片 -->
-    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <!--&lt;!&ndash; NFC &ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.NFC" />-->
+    <!--&lt;!&ndash; 要求当前设备必须要有NFC芯片 &ndash;&gt;-->
+    <!--<uses-feature android:name="android.hardware.nfc" android:required="true" />-->
 
     <application
         android:allowBackup="false"

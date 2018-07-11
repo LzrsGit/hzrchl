@@ -104,7 +104,7 @@ public class JwhcActivity extends AppCompatActivity implements View.OnClickListe
                 hcInfo.setHcr_sjh(getInfo.getUserInfo(this,"use_phonenum"));
                 hcInfo.setHcr_sfzh(getInfo.getUserInfo(this,"use_idcard"));
                 hcInfo.setHcdz(getInfo.getAddress(this));
-
+                hcInfo.setBhcr_jnjw("01");
                 //String compeletedURL = HttpUtil.getURLWithParams(originAddress, params);
                 HttpUtil.sendHcRequest(this.getString(R.string.url_address), hcInfo, new HttpCallbackListener() {
                     @Override

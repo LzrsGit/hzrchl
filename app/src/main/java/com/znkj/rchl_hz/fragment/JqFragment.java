@@ -133,6 +133,7 @@ public class JqFragment extends Fragment {
                 hcInfo.setHcdz(getInfo.getAddress(getContext()));
                 hcInfo.setBhcr_sjh(jqhc_sjh.getText().toString());
                 hcInfo.setBhcr_sfzh(jqhc_sfzh.getText().toString());
+                hcInfo.setBhcr_jnjw("01");
                 //String compeletedURL = HttpUtil.getURLWithParams(originAddress, params);
                 //mDialog = DialogUtils.createLoadingDialog(getActivity(),"加载中...");
                 HttpUtil.sendHcRequest(this.getString(R.string.url_address), hcInfo, new HttpCallbackListener() {

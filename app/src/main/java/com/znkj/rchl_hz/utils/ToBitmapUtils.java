@@ -4,7 +4,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.io.InputStream;
@@ -101,6 +103,25 @@ public class ToBitmapUtils {
         }
 
         return bitmap;
+    }
+
+    public static Bitmap sizeBitmap(Bitmap origin, View view) {
+        if (origin == null) {
+            return null;
+        }
+        int height = origin.getHeight();
+        int width = origin.getWidth();
+        int newWidth = view.getWidth();
+        int newHeight = view.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);// 使用后乘
+        Bitmap newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
+        if (!origin.isRecycled()) {//这时候origin还有吗？
+            origin.recycle();
+        }
+        return newBM;
     }
 
 }

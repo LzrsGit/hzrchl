@@ -26,8 +26,8 @@
                 android:id="@+id/head_img"
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:src="@drawable/circle"
-                android:layout_marginRight="35dp"/>
+                android:src="@drawable/mrtx"
+                android:layout_marginRight="135dp"/>
             <ImageView
                 android:id="@+id/res_img"
                 android:layout_width="80dp"
@@ -89,7 +89,7 @@
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
                 android:layout_marginRight="15dp"
-                android:text="姓名号码"
+                android:text="姓名"
                 android:textSize="14sp"/>
             <TextView
                 android:id="@+id/hcjg_xm"
@@ -216,38 +216,38 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_alignParentBottom="true">-->
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|center_vertical"
-            android:drawableTop="@drawable/common_dialog_selection_selector_bottom"
-            android:background="#1FA0FE"
-            android:textColor="#ffffff"
-            android:text="拍照"/>
-        <LinearLayout
-            android:layout_width="1dp"
-            android:layout_height="50dp"
-            android:background="#ffffff"
-            android:orientation="vertical"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp">
-        </LinearLayout>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|center_vertical"
-            android:drawableTop="@drawable/common_dialog_selection_selector_center"
-            android:background="#1FA0FE"
-            android:textColor="#ffffff"
-            android:text="随行人员检查"/>
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal|center_vertical"-->
+            <!--android:drawableTop="@drawable/common_dialog_selection_selector_bottom"-->
+            <!--android:background="#1FA0FE"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:text="拍照"/>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:background="#ffffff"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingBottom="2dp"-->
+            <!--android:paddingTop="2dp">-->
+        <!--</LinearLayout>-->
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_horizontal|center_vertical"-->
+            <!--android:drawableTop="@drawable/common_dialog_selection_selector_center"-->
+            <!--android:background="#1FA0FE"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:text="随行人员检查"/>-->
+    <!--</LinearLayout>-->
 
 </RelativeLayout>

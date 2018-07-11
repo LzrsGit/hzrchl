@@ -148,6 +148,7 @@ public class HttpUtil {
                     if (hcInfo.getHclx().trim().equalsIgnoreCase("jq")){
                         hcJSON.put("bhcr_sjh",hcInfo.getBhcr_sjh());
                         hcJSON.put("bhcr_sfzh",hcInfo.getBhcr_sfzh());
+                        hcJSON.put("bhcr_jnjw","01");
                     }else if (hcInfo.getHclx().trim().equalsIgnoreCase("mh")){
                         hcJSON.put("bhcr_sjh",hcInfo.getBhcr_sjh());
                         hcJSON.put("bhcr_xm",hcInfo.getBhcr_xm());
@@ -155,6 +156,7 @@ public class HttpUtil {
                         hcJSON.put("bhcr_mz",hcInfo.getBhcr_mz());
                         hcJSON.put("bhcr_csrqks",hcInfo.getBhcr_csrqks());
                         hcJSON.put("bhcr_csrqjs",hcInfo.getBhcr_csrqjs());
+                        hcJSON.put("bhcr_jnjw","01");
                     }else if(hcInfo.getHclx().trim().equalsIgnoreCase("cl")){
                         hcJSON.put("cl_cllx",hcInfo.getCl_cllx());
                         hcJSON.put("cl_clhm",hcInfo.getCl_clhm());

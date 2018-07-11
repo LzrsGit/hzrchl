@@ -136,6 +136,7 @@ public class MhFragment extends Fragment {
                 hcInfo.setBhcr_hjszd(mhhc_hjd.getText().toString());
                 hcInfo.setBhcr_csrqks(mhhc_kssj.getText().toString());
                 hcInfo.setBhcr_csrqjs(mhhc_jzsj.getText().toString());
+                hcInfo.setBhcr_jnjw("01");
                 //String compeletedURL = HttpUtil.getURLWithParams(originAddress, params);
                 HttpUtil.sendHcRequest(this.getString(R.string.url_address), hcInfo, new HttpCallbackListener() {
                     @Override
