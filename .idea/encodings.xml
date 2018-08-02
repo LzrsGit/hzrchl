@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/znkj/rchl_hz/model/HcRes.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/znkj/rchl_hz/model/User.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/znkj/rchl_hz/model/Xsxx.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/znkj/rchl_hz/model/fragmentTag.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/znkj/rchl_hz/pullableview/Pullable.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/znkj/rchl_hz/pullableview/PullableListView.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/znkj/rchl_hz/utils/HttpUtil.java" charset="GBK" />
@@ -47,6 +48,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/logbg2.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/add_btn_click.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/add_line.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/cursorsharp.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/editsharp.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_home_black_24dp.xml" charset="GBK" />

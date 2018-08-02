@@ -2,10 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-    <include layout="@layout/resultbar_layout"
-             android:id="@+id/include"></include>
-
     <LinearLayout
         android:id="@+id/line_all"
         android:layout_width="match_parent"
@@ -96,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="喝茶人"
+                android:text=""
                 android:textSize="14sp"/>
         </LinearLayout>
         <LinearLayout
@@ -119,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="男"
+                android:text=""
                 android:textSize="14sp"/>
         </LinearLayout>
         <LinearLayout
@@ -142,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="333333199911110011"
+                android:text=""
                 android:textSize="14sp"/>
         </LinearLayout>
         <LinearLayout
@@ -165,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="汉"
+                android:text=""
                 android:textSize="14sp"/>
         </LinearLayout>
         <LinearLayout
@@ -188,7 +184,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="1999年11月11日"
+                android:text=""
                 android:textSize="14sp"/>
         </LinearLayout>
         <LinearLayout
@@ -211,43 +207,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="户籍地址户籍地址户籍地址"
+                android:text=""
                 android:textSize="14sp"/>
         </LinearLayout>
     </LinearLayout>
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_alignParentBottom="true">-->
-
-        <!--<Button-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_gravity="bottom"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center_horizontal|center_vertical"-->
-            <!--android:drawableTop="@drawable/common_dialog_selection_selector_bottom"-->
-            <!--android:background="#1FA0FE"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:text="拍照"/>-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="1dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:background="#ffffff"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingBottom="2dp"-->
-            <!--android:paddingTop="2dp">-->
-        <!--</LinearLayout>-->
-        <!--<Button-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center_horizontal|center_vertical"-->
-            <!--android:drawableTop="@drawable/common_dialog_selection_selector_center"-->
-            <!--android:background="#1FA0FE"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:text="随行人员检查"/>-->
-    <!--</LinearLayout>-->
 
 </RelativeLayout>

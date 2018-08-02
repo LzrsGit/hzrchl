@@ -5,10 +5,19 @@
 
     <include layout="@layout/resultbar_layout"
              android:id="@+id/include"></include>
+    <ScrollView
+        android:id="@+id/scrview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include"
+        android:fadingEdge="vertical"
+        android:scrollbars="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/bh_line"
-        android:layout_below="@+id/include"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -23,9 +32,10 @@
             android:textSize="14sp"
             android:textColor="@color/shit"/>
         <TextView
+            android:id="@+id/clhcjg_clbh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10077656"
+            android:text=""
             android:textSize="14sp"
             android:textColor="@color/shit"/>
 
@@ -42,23 +52,23 @@
             android:id="@+id/img_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="left|center_horizontal"
-            android:paddingTop="5dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
-            android:paddingBottom="5dp">
-            <ImageView
-                android:id="@+id/head_img"
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:src="@drawable/circle"
-                android:layout_marginRight="35dp"/>
+            android:paddingTop="5dp">
+            <!--<ImageView-->
+            <!--android:id="@+id/head_img"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:src="@drawable/circle"-->
+            <!--android:layout_marginRight="35dp"/>-->
             <ImageView
                 android:id="@+id/res_img"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/red_cl_icon"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:src="@drawable/red_cl_icon"/>
         </LinearLayout>
 
         <LinearLayout
@@ -87,7 +97,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="10dp"
-            android:text="@string/poem_0"
+            android:text="暂无信息"
             android:textColor="#f25c44"
             android:textSize="13sp" />
 
@@ -100,7 +110,29 @@
             android:background="#D7D7D7"
             android:orientation="vertical">
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="3dp">
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:text="车辆类型"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/clhcjg_cllx"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textSize="14sp"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,160 +153,172 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="浙A88888"
+                android:text=""
                 android:textSize="14sp"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="3dp">
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:text="车辆品牌"
-                android:textSize="14sp"/>
-            <TextView
-                android:id="@+id/clhcjg_clpp"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:text="迈巴赫牌"
-                android:textSize="14sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="2dp">
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:text="车辆颜色"
-                android:textSize="14sp"/>
-            <TextView
-                android:id="@+id/clhcjg_clys"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:text="黑色"
-                android:textSize="14sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="3dp">
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:text="联系电话"
-                android:textSize="14sp"/>
-            <TextView
-                android:id="@+id/clhcjg_lxdh"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:text="111111"
-                android:textSize="14sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="3dp">
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:text="车主姓名"
-                android:textSize="14sp"/>
-            <TextView
-                android:id="@+id/clhcjg_czxm"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:text="喝茶人"
-                android:textSize="14sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="3dp">
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:text="身份证号"
-                android:textSize="14sp"/>
-            <TextView
-                android:id="@+id/clhcjg_sfzh"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:text="330000199111110031"
-                android:textSize="14sp"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:paddingRight="15dp"-->
+            <!--android:paddingTop="3dp">-->
+            <!--<TextView-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:text="车辆品牌"-->
+                <!--android:textSize="14sp"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/clhcjg_clpp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="迈巴赫牌"-->
+                <!--android:textSize="14sp"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:paddingRight="15dp"-->
+            <!--android:paddingTop="2dp">-->
+            <!--<TextView-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:text="车辆颜色"-->
+                <!--android:textSize="14sp"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/clhcjg_clys"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="黑色"-->
+                <!--android:textSize="14sp"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:paddingRight="15dp"-->
+            <!--android:paddingTop="3dp">-->
+            <!--<TextView-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:text="联系电话"-->
+                <!--android:textSize="14sp"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/clhcjg_lxdh"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="111111"-->
+                <!--android:textSize="14sp"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:paddingRight="15dp"-->
+            <!--android:paddingTop="3dp">-->
+            <!--<TextView-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:text="车主姓名"-->
+                <!--android:textSize="14sp"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/clhcjg_czxm"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="喝茶人"-->
+                <!--android:textSize="14sp"/>-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:paddingRight="15dp"-->
+            <!--android:paddingTop="3dp">-->
+            <!--<TextView-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:text="身份证号"-->
+                <!--android:textSize="14sp"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/clhcjg_sfzh"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="330000199111110031"-->
+                <!--android:textSize="14sp"/>-->
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="#D7D7D7"
-            android:orientation="vertical">
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.5dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:background="#D7D7D7"-->
+            <!--android:orientation="vertical">-->
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="3dp">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:paddingLeft="15dp"-->
+            <!--android:paddingRight="15dp"-->
+            <!--android:paddingTop="3dp">-->
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/circle"/>
-            <LinearLayout
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:orientation="vertical">
-            </LinearLayout>
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/red_icon"/>
+            <!--<ImageView-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:src="@drawable/circle"/>-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="#FFFFFF"-->
+                <!--android:orientation="vertical">-->
+            <!--</LinearLayout>-->
+            <!--<ImageView-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:src="@drawable/red_icon"/>-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/add_ry_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/line_all"
+        android:orientation="vertical">
+    </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,8 +18,11 @@ import android.widget.TextView;
 
 import com.znkj.rchl_hz.R;
 import com.znkj.rchl_hz.adapter.MyFragmentPagerAdapter;
+import com.znkj.rchl_hz.model.fragmentTag;
 import com.znkj.rchl_hz.utils.getInfoUtils;
 import com.githang.statusbar.StatusBarCompat;
+
+import java.util.List;
 
 
 public class MidActivity extends AppCompatActivity implements View.OnClickListener {
@@ -33,6 +40,10 @@ public class MidActivity extends AppCompatActivity implements View.OnClickListen
     private Button jwhcBtn;
     private TextView address;
 
+    public FragmentTransaction mFragmentTransaction;
+    public FragmentManager fragmentManager;
+    public String curFragmentTag = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +55,25 @@ public class MidActivity extends AppCompatActivity implements View.OnClickListen
         StatusBarCompat.setStatusBarColor(this, Color.parseColor("#1FA0FE") , false);
         //初始化视图
         initViews();
-
     }
+
+
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        Fragment f = new Fragment();
+//        if (resultCode==5){
+//            fragmentTag tagList =  fragmentTag.getFtTag();
+//            List tagNameList = tagList.getFragmentTag();
+//            for (int i=0; i<tagNameList.size();i++){
+//                if (i==0){
+//                    Log.e("dfdfdf","==="+(String)tagNameList.get(i));
+//                    f = fragmentManager.findFragmentByTag("android:switcher:2131624226:1");
+//                }
+//            }
+//        }
+//        Log.e("tttttttttttttt","==="+resultCode);
+//        f.onActivityResult(requestCode, resultCode, data);
+//    }
 
     private void initViews() {
         title = (TextView)findViewById(R.id.text_title);

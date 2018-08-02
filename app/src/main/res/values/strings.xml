@@ -20,7 +20,8 @@
     <string name="cancel">取消</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="url_address">http://192.168.12.47:8080/zdry/servlet/HcxxServlet</string>
+    <string name="url_address">http://20.65.2.12:7516/rchl/servlet/HcxxServlet</string>
+    <!--<string name="url_address">http://192.168.12.47:8080/zdry/servlet/HcxxServlet</string>-->
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

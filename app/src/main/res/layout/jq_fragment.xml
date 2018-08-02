@@ -35,6 +35,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:background="@null"
+                android:textCursorDrawable="@drawable/cursorsharp"
                 android:maxLength="11"
                 android:inputType="number"
                 android:textSize="14sp"/>
@@ -69,14 +70,59 @@
 
             <EditText
                 android:id="@+id/jqhc_sfzh"
+                style="@style/AutoCompleteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:background="@null"
+                android:textCursorDrawable="@drawable/cursorsharp"
                 android:maxLength="18"
-                android:textSize="14sp"
-                android:inputType="number"/>
+                android:textSize="14sp"/>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/loginline2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#D7D7D7"
+            android:orientation="vertical">
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linephoto"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/photo1"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+
+                android:src="@drawable/addphoto"/>
+            <ImageView
+                android:id="@+id/photo2"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:visibility="invisible"
+                android:src="@drawable/addphoto"/>
+
+            <ImageView
+                android:id="@+id/photo3"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:visibility="invisible"
+                android:src="@drawable/addphoto"/>
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <TextView

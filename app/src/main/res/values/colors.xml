@@ -12,6 +12,8 @@
     <color name="gray_line">#D7D7D7</color>
     <color name="gray_yellow">#FDFBD5</color>
     <color name="shit">#BBA284</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorThemeBackground">#F2F2F2</color>
     <drawable name="charIndexColor">#33000000</drawable>
     <drawable name="autoColor">#7FAAAAAA</drawable>
 </resources>

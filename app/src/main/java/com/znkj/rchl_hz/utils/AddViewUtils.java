@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,9 @@ import android.widget.Toast;
 import com.znkj.rchl_hz.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -31,25 +35,14 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  */
 public class AddViewUtils
 {
-	private ImageView sj_btn;
-	private ImageView del_btn;
-	private int id_num = 1000;
-	private List<ImageView> sj_btn_list = new ArrayList<ImageView>();
-	private List<View> view_list = new ArrayList<View>();
-	private Drawable sj_f;
-	private Drawable sj_t;
 
 
 	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-	public void addInfoLinear(Context context, LinearLayout linearlayout){
-		linearlayout.setPadding(DensityUtil.dip2px(context,5),DensityUtil.dip2px(context,5),DensityUtil.dip2px(context,5),DensityUtil.dip2px(context,5));
-		addInfoView(linearlayout,context);
-	}
-
-	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-	public void addLinear(String name, LinearLayout linelayout, Context context){
+	public Map<String,String> addLinear(String name, String code, LinearLayout linelayout, Context context){
 		linelayout.setPadding(DensityUtil.dip2px(context,5),DensityUtil.dip2px(context,5),DensityUtil.dip2px(context,5),DensityUtil.dip2px(context,5));
-		addView(linelayout,name,context);
+		Map<String,String> map = new HashMap<String,String>();
+		map = addView(linelayout,name,code,context);
+		return map;
 	}
 	public void removeLinear(LinearLayout linelayout){
 		linelayout.setPadding(0,0,0,0);
@@ -57,7 +50,7 @@ public class AddViewUtils
 	}
 
 	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-	private void addView(final LinearLayout lineLayout, String name, Context context) {
+	private Map<String,String> addView(final LinearLayout lineLayout, String name, String code, Context context) {
 		//文本lauout
 		final LinearLayout layout2=new LinearLayout(context);
 		layout2.setOrientation(LinearLayout.HORIZONTAL);
@@ -93,13 +86,31 @@ public class AddViewUtils
 		vlaueText.setTextSize(14);
 		//vlaueText.setId(10001);//设置 id
 		vlaueText.setInputType(InputType.TYPE_CLASS_NUMBER);
-		vlaueText.setText("0");
-		//设置可输入的最大值
+		vlaueText.setText("1");//设置可输入的最大值
+
+		Map<String,String> map = new HashMap<String,String>();
+		vlaueText.setTag(code);// 设置tag
+		map.put(code,"1");// 默认数量为1
+
 		vlaueText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
 		vlaueText.setBackgroundColor(Color.WHITE);
 		vlaueText.setGravity(Gravity.CENTER);
 		vlaueText.setHeight(DensityUtil.dip2px(context,40));
 		vlaueText.setWidth(DensityUtil.dip2px(context,40));
+		vlaueText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				//输入内容之前你想做什么
+			}
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				//输入的时候你想做什么
+			}
+			public void afterTextChanged(Editable s) {
+				//输入之后你想做什么
+				map.put((String)vlaueText.getTag(),s.toString());// 默认数量为1
+			}
+		});
 
 		//创建按钮
 		ImageView btn_del = new ImageView(context);
@@ -120,12 +131,12 @@ public class AddViewUtils
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if ("".equalsIgnoreCase(vlaueText.getText().toString())||null==vlaueText.getText().toString()) {
-					vlaueText.setText("0");
+					vlaueText.setText("1");
 				}else {
-					if (0 != Integer.valueOf(vlaueText.getText().toString())) {
+					if (1 != Integer.valueOf(vlaueText.getText().toString())) {
 						vlaueText.setText((Integer.valueOf(vlaueText.getText().toString()) - 1) + "");
 					} else {
-						Toast.makeText(context, "该值不能小于0", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "该值不能小于1", Toast.LENGTH_SHORT).show();
 					}
 				}
 			}
@@ -155,80 +166,8 @@ public class AddViewUtils
 		lineLayout.addView(layout2);
 		lineLayout.addView(layout_line);
 
+		return map;
 	}
-
-	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-	private void addInfoView(final LinearLayout lineLayout, Context context) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.add_view_item, null);
-		if(id_num==2000){
-			id_num = 0;
-		}
-		layout.setTag("layout"+id_num);
-		view_list.add(layout);
-		//Log.e("cccccccc=====",""+id_num);
-		sj_f = context.getDrawable(R.drawable.sj_f);
-		sj_t = context.getDrawable(R.drawable.sj_t);
-		sj_btn = (ImageView)layout.findViewById(R.id.sj);
-		del_btn = (ImageView)layout.findViewById(R.id.del_btn);
-		sj_btn.setTag("sj"+id_num);
-		del_btn.setTag(id_num);
-		del_btn.setOnClickListener(vClick);
-		sj_btn_list.add(sj_btn);
-		id_num++;
-		sj_btn.setOnClickListener(pChildClick);
-		//分割线
-		final LinearLayout layout_line=new LinearLayout(context);
-		LinearLayout.LayoutParams params_line = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-				DensityUtil.dip2px(context,10));
-		//params_line.setMargins(DensityUtil.dip2px(context,105),0,DensityUtil.dip2px(context,20),0);
-		//layout_line.setBackgroundColor(Color.parseColor("#D7D7D7"));
-		layout_line.setOrientation(LinearLayout.VERTICAL);
-		layout_line.setLayoutParams(params_line);
-		final LinearLayout layout_ad=new LinearLayout(context);
-		LinearLayout.LayoutParams params_ad = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
-		layout_ad.setOrientation(LinearLayout.VERTICAL);
-		layout_ad.setLayoutParams(params_ad);
-		layout_ad.addView(layout);
-		layout_ad.addView(layout_line);
-		//加入布局
-		lineLayout.addView(layout_ad);
-	}
-
-	View.OnClickListener pChildClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			final Object tag = v.getTag();
-			if (tag!=null){
-				ImageView temp_imgv = v.findViewWithTag(tag);
-				temp_imgv.setImageDrawable(sj_t);
-				for (int ii=0;ii<sj_btn_list.size();ii++){
-					String iitag = (String)sj_btn_list.get(ii).getTag();
-					if(!iitag.equalsIgnoreCase((String)tag)){
-						ImageView temp_imgv1 = sj_btn_list.get(ii);
-						temp_imgv1.setImageDrawable(sj_f);
-					}
-				}
-			}
-		}
-	};
-
-	View.OnClickListener vClick = new View.OnClickListener(){
-		public void onClick(View v) {
-			final Object tag = v.getTag();
-			if (tag!=null){
-				ImageView temp_imgv = v.findViewWithTag(tag);
-				ViewGroup view = (ViewGroup)temp_imgv.getParent();
-				if(null!=view){
-					ViewGroup view_pa = (ViewGroup)view.getParent();
-					ViewGroup view_pa_p = (ViewGroup)view_pa.getParent();
-					view_pa_p.removeView(view_pa);
-				}
-			}
-		}
-	};
 
 
 }

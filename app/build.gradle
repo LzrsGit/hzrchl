@@ -40,6 +40,12 @@ dependencies {
     //状态栏颜色
     //ButterKnife框架
     compile 'com.jakewharton:butterknife:8.8.1'
+    //日期选择
+    compile 'com.contrarywind:Android-PickerView:3.2.4'
+    //户籍地选择recycleview分割线
+    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation project(':commons')
     implementation project(':core')

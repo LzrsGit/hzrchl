@@ -1,6 +1,7 @@
 package com.znkj.rchl_hz.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.content.ContentUris;
 import android.content.Context;
@@ -13,41 +14,39 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * @author zhengzhong on 2016/8/6 16:16
  * Email zheng_zhong@163.com
  */
-public class PhotoUtils {
-    private static final String TAG = "PhotoUtils";
+public class ActPhotoUtils {
+    private static final String TAG = "ActPhotoUtils";
 
     /**
-     * @param fragment    当前fragment
+     * @param activity    当前activity
      * @param imageUri    拍照后照片存储路径
      * @param requestCode 调用系统相机请求码
      */
-    public static void takePicture(Fragment fragment, Uri imageUri, int requestCode) {
+    public static void takePicture(Activity activity, Uri imageUri, int requestCode) {
         //调用系统相机
         Intent intentCamera = new Intent();
         intentCamera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         //将拍照结果保存至photo_file的Uri中，不保留在相册中
         intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        fragment.startActivityForResult(intentCamera, requestCode);
+        activity.startActivityForResult(intentCamera, requestCode);
     }
 
     /**
-     * @param fragment    当前fragment
+     * @param activity    当前activity
      * @param requestCode 打开相册的请求码
      */
-    public static void openPic(Fragment fragment, int requestCode) {
+    public static void openPic(Activity activity, int requestCode) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType("image/*");
-        fragment.startActivityForResult(photoPickerIntent, requestCode);
+        activity.startActivityForResult(photoPickerIntent, requestCode);
     }
+
     /**
-     * @param fragment    当前fragment
+     * @param activity    当前activity
      * @param orgUri      剪裁原图的Uri
      * @param desUri      剪裁后的图片的Uri
      * @param aspectX     X方向的比例
@@ -56,7 +55,7 @@ public class PhotoUtils {
      * @param height      剪裁图片高度
      * @param requestCode 剪裁图片的请求码
      */
-    public static void cropImageUri(Fragment fragment, Uri orgUri, Uri desUri, int aspectX, int aspectY, int width, int height, int requestCode) {
+    public static void cropImageUri(Activity activity, Uri orgUri, Uri desUri, int aspectX, int aspectY, int width, int height, int requestCode) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -76,7 +75,7 @@ public class PhotoUtils {
         intent.putExtra("return-data", false);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true);
-        fragment.startActivityForResult(intent, requestCode);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     /**
@@ -208,14 +207,6 @@ public class PhotoUtils {
      */
     private static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
-    }
-
-    public static String getCharacterAndNumber() {
-        String rel="";
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date curDate = new Date(System.currentTimeMillis());
-        rel = formatter.format(curDate);
-        return rel;
     }
 
 }

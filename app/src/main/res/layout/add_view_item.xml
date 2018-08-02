@@ -23,10 +23,12 @@
                 android:text="手机号码"/>
 
             <EditText
+                android:id="@+id/sjhm"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:background="@null"
+                android:textCursorDrawable="@drawable/cursorsharp"
                 android:inputType="phone"
                 android:maxLength="11"
                 android:textSize="14sp"/>
@@ -44,11 +46,12 @@
                 android:text="身份证号"/>
 
             <EditText
+                android:id="@+id/sfzh"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:background="@null"
-                android:inputType="number"
+                android:textCursorDrawable="@drawable/cursorsharp"
                 android:maxLength="18"
                 android:textSize="14sp"/>
         </LinearLayout>

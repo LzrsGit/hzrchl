@@ -89,8 +89,6 @@ public class ResultActivity extends AppCompatActivity {
         hcrmz = (TextView)findViewById(R.id.hcjg_mz);
         hcrcsrq = (TextView)findViewById(R.id.hcjg_csrq);
         hcrhjdz = (TextView)findViewById(R.id.hcjg_hjdz);
-        bjxx = (ExpandableTextView)findViewById(R.id.etv);
-        resImg = (ImageView)findViewById(R.id.res_img);
     }
 
     private void setData(){
@@ -107,12 +105,16 @@ public class ResultActivity extends AppCompatActivity {
         if(!"".equalsIgnoreCase(((String)resinfo.get(14)).trim())&&resinfo.get(14)!=null){
             if("通过".equalsIgnoreCase((String)resinfo.get(14))){
                 resImg.setImageResource(R.drawable.green_icon);
+                bjxx.setTextColor(Color.parseColor("#8cc542") );
             }else if("存疑".equalsIgnoreCase((String)resinfo.get(14))){
                 resImg.setImageResource(R.drawable.yellow_icon);
+                bjxx.setTextColor(Color.parseColor("#f4b251") );
             }else if("拦截".equalsIgnoreCase((String)resinfo.get(14))){
                 resImg.setImageResource(R.drawable.red_lj_icon);
+                bjxx.setTextColor(Color.parseColor("#f25c44") );
             }else if("抓捕".equalsIgnoreCase((String)resinfo.get(14))){
                 resImg.setImageResource(R.drawable.red_icon);
+                bjxx.setTextColor(Color.parseColor("#f25c44") );
             }
         }
 
@@ -175,7 +177,7 @@ public class ResultActivity extends AppCompatActivity {
         }
         if(Jsobject!=null){
             //Object res;
-            Log.e("Jsobject"," is not null");
+            //Log.e("Jsobject"," is not null");
             try{
                jsArr = (JSONArray) Jsobject.get("res");
             }catch (JSONException e){
@@ -186,7 +188,7 @@ public class ResultActivity extends AppCompatActivity {
         if (jsArr!=null){
             for (int i=0;i<jsArr.length();i++){
                 JSONArray tempArr = null;
-                if(i==2) {
+                if(i==1) {
                     try {
                         tempArr = (JSONArray) jsArr.get(i);
                     } catch (JSONException e) {
@@ -204,7 +206,7 @@ public class ResultActivity extends AppCompatActivity {
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
-                        Log.e("resArr[" + i + "][" + j + "]===", resArr);
+                        //Log.e("resArr[" + i + "][" + j + "]===", resArr);
                         resinfo.add(resArr);
                     }
                 }

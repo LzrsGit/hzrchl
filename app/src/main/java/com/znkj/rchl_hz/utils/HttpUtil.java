@@ -139,33 +139,61 @@ public class HttpUtil {
                 HttpURLConnection connection = null;
                 try{
                     JSONObject hcJSON = new JSONObject();
-                    hcJSON.put("hclx",hcInfo.getHclx());
-                    hcJSON.put("hcbb",hcInfo.getHcbb());
-                    hcJSON.put("hcr_xm",hcInfo.getHcr_xm());
-                    hcJSON.put("hcr_sfzh",hcInfo.getHcr_sfzh());
-                    hcJSON.put("hcr_sjh",hcInfo.getHcr_sjh());
-                    hcJSON.put("hcr_hcdz",hcInfo.getHcdz());
-                    if (hcInfo.getHclx().trim().equalsIgnoreCase("jq")){
-                        hcJSON.put("bhcr_sjh",hcInfo.getBhcr_sjh());
-                        hcJSON.put("bhcr_sfzh",hcInfo.getBhcr_sfzh());
-                        hcJSON.put("bhcr_jnjw","01");
-                    }else if (hcInfo.getHclx().trim().equalsIgnoreCase("mh")){
-                        hcJSON.put("bhcr_sjh",hcInfo.getBhcr_sjh());
-                        hcJSON.put("bhcr_xm",hcInfo.getBhcr_xm());
-                        hcJSON.put("bhcr_hjszd",hcInfo.getBhcr_hjszd());
-                        hcJSON.put("bhcr_mz",hcInfo.getBhcr_mz());
-                        hcJSON.put("bhcr_csrqks",hcInfo.getBhcr_csrqks());
-                        hcJSON.put("bhcr_csrqjs",hcInfo.getBhcr_csrqjs());
-                        hcJSON.put("bhcr_jnjw","01");
-                    }else if(hcInfo.getHclx().trim().equalsIgnoreCase("cl")){
-                        hcJSON.put("cl_cllx",hcInfo.getCl_cllx());
-                        hcJSON.put("cl_clhm",hcInfo.getCl_clhm());
-                        hcJSON.put("cl_scwps",hcInfo.getCl_scwps());
-                        hcJSON.put("cl_wjwp",hcInfo.getCl_wjwp());
-                    }else if(hcInfo.getHclx().trim().equalsIgnoreCase("zh")){
-
+                    if(hcInfo.getSjlx().equalsIgnoreCase("hc")){
+                        hcJSON.put("sjlx",hcInfo.getSjlx());
+                        hcJSON.put("hclx",hcInfo.getHclx());
+                        hcJSON.put("hcbb",hcInfo.getHcbb());
+                        hcJSON.put("hcr_xm",hcInfo.getHcr_xm());
+                        hcJSON.put("hcr_sfzh",hcInfo.getHcr_sfzh());
+                        hcJSON.put("hcr_sjh",hcInfo.getHcr_sjh());
+                        hcJSON.put("hcr_hcdz",hcInfo.getHcdz());
+                        if (hcInfo.getHclx().trim().equalsIgnoreCase("jq")){
+                            hcJSON.put("bhcr_sjh",hcInfo.getBhcr_sjh());
+                            hcJSON.put("bhcr_sfzh",hcInfo.getBhcr_sfzh());
+                            hcJSON.put("bhcr_zp",hcInfo.getBhcr_zp());
+                            hcJSON.put("bhcr_zp2",hcInfo.getBhcr_zp2());
+                            hcJSON.put("bhcr_jnjw",hcInfo.getBhcr_jnjw());
+                        }else if (hcInfo.getHclx().trim().equalsIgnoreCase("mh")){
+                            hcJSON.put("bhcr_sjh",hcInfo.getBhcr_sjh());
+                            hcJSON.put("bhcr_xm",hcInfo.getBhcr_xm());
+                            hcJSON.put("bhcr_hjszd",hcInfo.getBhcr_hjszd());
+                            hcJSON.put("bhcr_mz",hcInfo.getBhcr_mz());
+                            hcJSON.put("bhcr_csrqks",hcInfo.getBhcr_csrqks());
+                            hcJSON.put("bhcr_csrqjs",hcInfo.getBhcr_csrqjs());
+                            hcJSON.put("bhcr_zp",hcInfo.getBhcr_zp());
+                            hcJSON.put("bhcr_zp2",hcInfo.getBhcr_zp2());
+                            hcJSON.put("bhcr_jnjw",hcInfo.getBhcr_jnjw());
+                        }else if(hcInfo.getHclx().trim().equalsIgnoreCase("cl")){
+                            hcJSON.put("cl_cllx",hcInfo.getCl_cllx());
+                            hcJSON.put("cl_clhm",hcInfo.getCl_clhm());
+                            hcJSON.put("cl_scwps",hcInfo.getCl_scwps());
+                            hcJSON.put("cl_wjwp",hcInfo.getCl_wjwp());
+                            hcJSON.put("ywwjwp",hcInfo.getYwwjwp());
+                        }else if(hcInfo.getHclx().trim().equalsIgnoreCase("zh")){
+                            hcJSON.put("cl_cllx",hcInfo.getCl_cllx());
+                            hcJSON.put("cl_clhm",hcInfo.getCl_clhm());
+                            hcJSON.put("cl_scwps",hcInfo.getCl_scwps());
+                            hcJSON.put("zh_ryxx",hcInfo.getZh_ryxx());
+                            hcJSON.put("cl_wjwp",hcInfo.getCl_wjwp());
+                            hcJSON.put("ywwjwp",hcInfo.getYwwjwp());
+                        }else if(hcInfo.getHclx().trim().equalsIgnoreCase("jw")){
+                            hcJSON.put("bhcr_zjlx",hcInfo.getBhcr_zjlx());
+                            hcJSON.put("bhcr_sfzh",hcInfo.getBhcr_sfzh());
+                            hcJSON.put("bhcr_gjdq",hcInfo.getBhcr_hjszd());
+                            hcJSON.put("bhcr_zp",hcInfo.getBhcr_zp());
+                            hcJSON.put("bhcr_zp2",hcInfo.getBhcr_zp2());
+                            hcJSON.put("bhcr_jnjw",hcInfo.getBhcr_jnjw());
+                        }
+                    }else if(hcInfo.getSjlx().equalsIgnoreCase("hjd")){
+                        hcJSON.put("sjlx",hcInfo.getSjlx());
+                    }else if(hcInfo.getSjlx().equalsIgnoreCase("gjdq")){
+                        hcJSON.put("sjlx",hcInfo.getSjlx());
+                    }else if(hcInfo.getSjlx().equalsIgnoreCase("zjzl")){
+                        hcJSON.put("sjlx",hcInfo.getSjlx());
+                    }else if(hcInfo.getSjlx().equalsIgnoreCase("abqx")){
+                        hcJSON.put("sjlx",hcInfo.getSjlx());
+                        hcJSON.put("hcr_sfzh",hcInfo.getHcr_sfzh());
                     }
-
                     String content = String.valueOf(hcJSON);
 
                     URL url = new URL(address);

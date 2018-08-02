@@ -6,23 +6,27 @@
             <item
                 android:id="@+id/nav_hc"
                 android:icon="@drawable/ic_menu_share"
-                android:title=" 核查版" />
+                android:title="路面版" />
             <item
                 android:id="@+id/nav_ab"
                 android:icon="@drawable/ic_menu_send"
                 android:title="安保版" />
+            <item
+                android:id="@+id/nav_xl"
+                android:icon="@drawable/ic_menu_send"
+                android:title="巡逻版" />
         </menu>
     </item>
 
     <group android:checkableBehavior="single">
+        <!--<item-->
+            <!--android:id="@+id/nav_yj"-->
+            <!--android:icon="@drawable/ic_menu_camera"-->
+            <!--android:title="意见反馈" />-->
         <item
-            android:id="@+id/nav_yj"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="意见反馈" />
-        <item
-            android:id="@+id/nav_app"
+            android:id="@+id/nav_download"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="关于APP" />
+            android:title="下载字典项" />
         <item
             android:id="@+id/quit_app"
             android:icon="@drawable/ic_menu_quit"

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -32,10 +35,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.znkj.rchl_hz.HttpCallbackListener;
 import com.znkj.rchl_hz.MainActivity;
 import com.znkj.rchl_hz.R;
+import com.znkj.rchl_hz.WelcomeActivity;
+import com.znkj.rchl_hz.model.HcInfo;
+import com.znkj.rchl_hz.utils.HttpUtil;
 import com.znkj.rchl_hz.utils.getInfoUtils;
 import com.githang.statusbar.StatusBarCompat;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URLDecoder;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,7 +78,7 @@ public class HomeActivity extends AppCompatActivity
         SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
         u_name = sp.getString("use_name", "");
         u_id = sp.getString("use_id", "");
-        s_bb = sp.getString("sys_bb", "");
+        s_bb = sp.getString("sys_bb", "02");
         img = findViewById(R.id.main_img);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -242,20 +255,72 @@ public class HomeActivity extends AppCompatActivity
             if (img==null){
                 Toast.makeText(HomeActivity.this, "null", Toast.LENGTH_LONG).show();
             }else{
-                SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("sys_bb", "01");
-                editor.commit();
-                img.setImageResource(R.drawable.ab);
-                img.setBackgroundColor(Color.parseColor("#00db43"));
-                findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor("#00db43"));
-                StatusBarCompat.setStatusBarColor(this, Color.parseColor("#00db43"), false);
+                String zt = "0";
+                String dateStr ="";
+                JSONObject dateJson = null;
+                JSONObject tempJson = null;
+                JSONArray jsArr = null;
+                dateStr = getInfo.getUserInfo(this,"abqx");
+                if(!"".equalsIgnoreCase(dateStr.trim())){
+                    try {
+                        dateJson = new JSONObject(dateStr);
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }else {Toast.makeText(HomeActivity.this, "安保权限获取错误", Toast.LENGTH_LONG).show();}
+                if(dateJson!=null){
+                    try {
+                        //Log.e("jjjjjjjjj","==="+dateJson.get("res"));
+                        jsArr = (JSONArray) dateJson.get("res");
+                        for (int j=0; j<jsArr.length(); j++){
+                            tempJson = (JSONObject)jsArr.get(j);
+
+                            //Log.e("ssss","==="+tempJson.get("name"));
+                            //Log.e("ssss","==="+tempJson.get("dm"));
+                            try {
+                                zt = ""+ URLDecoder.decode((String)tempJson.get("zt"),"UTF-8");
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+                if(!("0".equalsIgnoreCase(zt))){
+                    SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("sys_bb", "01");
+                    editor.commit();
+                    img.setImageResource(R.drawable.ab);
+                    img.setBackgroundColor(Color.parseColor("#00db43"));
+                    findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor("#00db43"));
+                    StatusBarCompat.setStatusBarColor(this, Color.parseColor("#00db43"), false);
+                }else {
+                    Toast.makeText(HomeActivity.this, "暂无安保版权限，请联系管理员", Toast.LENGTH_LONG).show();
+                }
+
             }
 
-        }  else if (id == R.id.nav_yj) {
+        }  else if (id == R.id.nav_xl) {
+            if (img==null){
+                Toast.makeText(HomeActivity.this, "null", Toast.LENGTH_LONG).show();
+            }else{
+                SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("sys_bb", "41");
+                editor.commit();
+                img.setImageResource(R.drawable.lm);
+                img.setBackgroundColor(Color.parseColor("#1FA0FE"));
+                findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor("#1FA0FE"));
+                StatusBarCompat.setStatusBarColor(this, Color.parseColor("#1FA0FE"), false);
+            }
 
-        } else if (id == R.id.nav_app) {
-
+        } else if (id == R.id.nav_download) {
+            getData("hjd");
+            getData("gjdq");
+            getData("zjzl");
         }else if (id == R.id.quit_app) {
             infoInt = 1;
             showDialog("确认注销当前用户吗？");
@@ -365,5 +430,91 @@ public class HomeActivity extends AppCompatActivity
         }
         return false;
     }
+
+
+    //下载字典项
+    private void getData(String sType){
+        HcInfo hcInfo = new HcInfo();
+        hcInfo.setSjlx(sType);
+        HttpUtil.sendHcRequest(this.getString(R.string.url_address), hcInfo, new HttpCallbackListener() {
+            @Override
+            public void onFinish(String response) {
+                Message message = new Message();
+                if ("WRONG".equalsIgnoreCase(response.trim())) {
+                    message.what = 0;
+                } else {
+                    if (sType.equalsIgnoreCase("hjd")){
+                        message.what = 1;
+                    }else if(sType.equalsIgnoreCase("gjdq")){
+                        message.what = 2;
+                    }else if(sType.equalsIgnoreCase("zjzl")){
+                        message.what = 3;
+                    }else {
+                        message.what = 4;
+                    }
+                    message.obj = response;
+                }
+                mHandler.sendMessage(message);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Message message = new Message();
+                message.what = 0;
+                message.obj = e.toString();
+                mHandler.sendMessage(message);
+            }
+        });
+    }
+
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            String DmArr = "";
+            switch (msg.what) {
+                case 1:  //户籍地
+                    DmArr = msg.obj.toString();
+                    //Log.e("darr","1====="+DmArr);
+                    editor.putString("hjdList", DmArr);
+                    Toast.makeText(HomeActivity.this, "获取字典项成功", Toast.LENGTH_LONG).show();
+                    editor.commit();
+                    break;
+                case 2:  //国籍地区
+                    DmArr = msg.obj.toString();
+                    //Log.e("darr","2====="+DmArr);
+                    editor.putString("gjdqList", DmArr);
+                    Toast.makeText(HomeActivity.this, "获取字典项成功", Toast.LENGTH_LONG).show();
+                    editor.commit();
+                    break;
+                case 3:  //证件类型
+                    DmArr = msg.obj.toString();
+                    //Log.e("darr","3====="+DmArr);
+                    editor.putString("zjzlList", DmArr);
+                    Toast.makeText(HomeActivity.this, "获取字典项成功", Toast.LENGTH_LONG).show();
+                    break;
+                case 4:  //数据错误
+                    Toast.makeText(HomeActivity.this, "获取字典项类型错误", Toast.LENGTH_LONG).show();
+                    editor.putString("hjdList", "");
+                    editor.putString("gjdqList", "");
+                    editor.putString("zjzlList", "");
+                    break;
+                case 0:
+                    //String result = msg.obj.toString();
+                    String result = "更新字典项失败，请稍后重试";
+                    //Log.e("bbbbuuuuuggggg","====="+msg.obj.toString());
+                    Toast.makeText(HomeActivity.this, result, Toast.LENGTH_LONG).show();
+                    editor.putString("hjdList", "");
+                    editor.putString("gjdqList", "");
+                    editor.putString("zjzlList", "");
+                    break;
+                default:
+                    break;
+            }
+            editor.commit();
+        }
+    };
 
 }

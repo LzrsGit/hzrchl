@@ -50,8 +50,8 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:background="@null"
-                        android:inputType="text"
-                        android:maxLength="11"
+                        android:textCursorDrawable="@drawable/cursorsharp"
+                        android:focusableInTouchMode="false"
                         android:textSize="14sp"/>
                 </LinearLayout>
 
@@ -85,8 +85,8 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:background="@null"
+                        android:textCursorDrawable="@drawable/cursorsharp"
                         android:inputType="text"
-                        android:maxLength="18"
                         android:textSize="14sp"/>
                 </LinearLayout>
 
@@ -159,6 +159,7 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:background="@null"
+                        android:textCursorDrawable="@drawable/cursorsharp"
                         android:inputType="number"
                         android:maxLength="3"
                         android:textSize="14sp"/>

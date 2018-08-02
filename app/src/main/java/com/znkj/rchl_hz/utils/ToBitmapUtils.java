@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -94,14 +95,15 @@ public class ToBitmapUtils {
         options.inJustDecodeBounds = false;
         decodeBitmap(context, uri, options);
         options = new BitmapFactory.Options();
-        options.inSampleSize = calculatInSampleSize(options, imageView);
+        //options.inSampleSize = calculatInSampleSize(options, imageView);
+        options.inSampleSize = 8;
         Bitmap bitmap = null;
         try {
             bitmap = decodeBitmap(context, uri, options);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        //Log.e("bitmapsize","===="+bitmap.getByteCount());
         return bitmap;
     }
 

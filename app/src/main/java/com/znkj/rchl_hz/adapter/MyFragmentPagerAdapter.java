@@ -3,13 +3,19 @@ package com.znkj.rchl_hz.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.ViewGroup;
 
+import com.znkj.rchl_hz.R;
 import com.znkj.rchl_hz.fragment.JqFragment;
 import com.znkj.rchl_hz.fragment.MhFragment;
+import com.znkj.rchl_hz.model.fragmentTag;
 
-/**
- * Created by Carson_Ho on 16/7/22.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private String[] mTitles = new String[]{ "精确核查", "模糊核查"};
@@ -23,16 +29,10 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        /*Bundle bundle = new Bundle();
-        bundle.putString("msg", "ssdsds");
-        bundle.putString("xm", "lll");
-        bundle.putString("sjh", "222222");
-        bundle.putString("sfzh", "123456");*/
         Fragment fragment;
         fragment = new JqFragment();
-        //fragment.setArguments(bundle);
         if (position == 1) {
-            return new MhFragment();
+            fragment = new MhFragment();
         }
         return fragment;
     }
@@ -47,4 +47,22 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mTitles[position];
     }
+
+//    @Override
+//    public Object instantiateItem(ViewGroup container, int position) {
+//        //得到缓存的fragment
+//        Fragment fragment = (Fragment) super.instantiateItem(container,
+//                position);
+//        String fragmentTagName = fragment.getTag();
+//        fragmentTag tagList =  fragmentTag.getFtTag();
+//        Log.e("走了这里11","============================");
+//        if(position==1){
+//            Log.e("走了这里22","============================");
+//            List lll = new ArrayList();
+//            lll.add(fragmentTagName);
+//            tagList.setFragmentTag(lll);
+//        }
+//
+//        return fragment;
+//    }
 }

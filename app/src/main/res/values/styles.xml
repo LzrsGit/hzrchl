@@ -65,4 +65,9 @@
         <!-- 指定消失的动画xml  -->
     </style>
 
+    <style name="selectDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>//无标题
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
 </resources>
