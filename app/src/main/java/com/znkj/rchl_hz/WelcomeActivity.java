@@ -120,6 +120,7 @@ public class WelcomeActivity extends Activity {
 				String hjddate = getInfo.getUserInfo(this, "hjdList");
 				String gjdqdate = getInfo.getUserInfo(this, "gjdqList");
 				String zjzldate = getInfo.getUserInfo(this, "zjzlList");
+				String hcdddate = getInfo.getUserInfo(this, "hcdd");
 				if("".equalsIgnoreCase(hjddate)||hjddate==null){
 					getData("hjd");
 				}
@@ -129,7 +130,9 @@ public class WelcomeActivity extends Activity {
 				if("".equalsIgnoreCase(zjzldate)||zjzldate==null){
 					getData("zjzl");
 				}
-
+				if("".equalsIgnoreCase(hcdddate)||hcdddate==null){
+					getData("hcdd");//获取核查地点
+				}
 				SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
 				SharedPreferences.Editor editor = sp.edit();
 				editor.putString("use_name", userinfo.getString("realname"));
@@ -139,6 +142,7 @@ public class WelcomeActivity extends Activity {
 				editor.putString("sys_bb", "02");//默认路面版
 				editor.putString("abqx", "0");//安保版权限，0无权限，1有权限，默认无权限
 				editor.commit();
+				getData("abqx");//获取安保权限
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -148,6 +152,7 @@ public class WelcomeActivity extends Activity {
 			String hjddate = getInfo.getUserInfo(this, "hjdList");
 			String gjdqdate = getInfo.getUserInfo(this, "gjdqList");
 			String zjzldate = getInfo.getUserInfo(this, "zjzlList");
+			String hcdddate = getInfo.getUserInfo(this, "hcdd");
 			if("".equalsIgnoreCase(hjddate)||hjddate==null){
 				getData("hjd");
 			}
@@ -156,6 +161,9 @@ public class WelcomeActivity extends Activity {
 			}
 			if("".equalsIgnoreCase(zjzldate)||zjzldate==null){
 				getData("zjzl");
+			}
+			if("".equalsIgnoreCase(hcdddate)||hcdddate==null){
+				getData("hcdd");//获取核查地点
 			}
 			SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
 			SharedPreferences.Editor editor = sp.edit();
@@ -191,6 +199,8 @@ public class WelcomeActivity extends Activity {
 						message.what = 3;
 					}else if(sType.equalsIgnoreCase("abqx")) {
 						message.what = 5;
+					}else if(sType.equalsIgnoreCase("hcdd")) {
+						message.what = 6;
 					} else {
 						message.what = 4;
 					}
@@ -239,21 +249,23 @@ public class WelcomeActivity extends Activity {
 					editor.putString("gjdqList", "");
 					editor.putString("zjzlList", "");
 					editor.putString("abqx", "0");
+					editor.putString("hcdd", "");
 					break;
 				case 5:  //安保权限
 					DmArr = msg.obj.toString();
 					//Log.e("darr","3====="+DmArr);
 					editor.putString("abqx", DmArr);
 					break;
+				case 6:  //核查地点
+					DmArr = msg.obj.toString();
+					//Log.e("darr","3====="+DmArr);
+					editor.putString("hcdd", DmArr);
+					break;
 				case 0:
 					//String result = msg.obj.toString();
 					String result = "自动更新字典项失败，请手动获取";
 					//Log.e("bbbbuuuuuggggg","====="+msg.obj.toString());
 					Toast.makeText(WelcomeActivity.this, result, Toast.LENGTH_LONG).show();
-					editor.putString("hjdList", "");
-					editor.putString("gjdqList", "");
-					editor.putString("zjzlList", "");
-					editor.putString("abqx", "0");
 					break;
 				default:
 					break;

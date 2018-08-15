@@ -60,6 +60,7 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/dj_sfzh"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

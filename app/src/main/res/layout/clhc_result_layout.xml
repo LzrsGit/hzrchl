@@ -5,10 +5,19 @@
 
     <include layout="@layout/resultbar_layout"
              android:id="@+id/include"></include>
+    <ScrollView
+        android:id="@+id/scrview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include"
+        android:fadingEdge="vertical"
+        android:scrollbars="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/bh_line"
-        android:layout_below="@+id/include"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -263,5 +272,7 @@
                 <!--android:textSize="14sp"/>-->
         <!--</LinearLayout>-->
     </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

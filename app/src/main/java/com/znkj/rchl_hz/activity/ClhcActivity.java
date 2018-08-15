@@ -80,6 +80,7 @@ public class ClhcActivity extends AppCompatActivity implements View.OnClickListe
                             ClhcResultActivity.class);
                     intent.putExtra("result", msg.obj.toString());
                     startActivity(intent);
+                    finish();
                     break;
                 case 0:
                     //String result = msg.obj.toString();
@@ -397,7 +398,7 @@ public class ClhcActivity extends AppCompatActivity implements View.OnClickListe
                     hcInfo.setHcr_sfzh(getInfo.getUserInfo(this,"use_idcard"));
                     hcInfo.setHcdz(getInfo.getAddress(this));
                     hcInfo.setCl_cllx(cllxDm.trim());
-                    hcInfo.setCl_clhm(clhm.getText().toString().trim());
+                    hcInfo.setCl_clhm(clhm.getText().toString().trim().toUpperCase());
                     hcInfo.setCl_scwps(scwps.getText().toString().trim());
                     if(wpMap.size()>0){
                         JSONObject jsonObject = new JSONObject();

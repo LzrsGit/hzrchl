@@ -1,16 +1,20 @@
 package com.znkj.rchl_hz.activity;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,6 +86,7 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
     private Drawable sj_f;
     private Drawable sj_t;
     private String zh_ryxx = "";
+    private EditText djsfzhTex;
 
     private Dialog mDialog;
 
@@ -95,6 +100,7 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
                             ZhhcResultActivity.class);
                     intent.putExtra("result", msg.obj.toString());
                     startActivity(intent);
+                    finish();
                     break;
                 case 0:
                     //String result = msg.obj.toString();
@@ -118,6 +124,7 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
         infoLineLayout = (LinearLayout)findViewById(R.id.add_peo_inf);
         linearLayoutProductType = (LinearLayout) findViewById(R.id.wjwp_list);
         linearLayoutProductType.setOnClickListener(this);
+        register();
         getData();
         initView();
         initData();
@@ -337,7 +344,7 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
                     hcInfo.setCl_cllx(cllxDm.trim());
                     hcInfo.setCl_clhm(clhm.getText().toString().trim());
                     hcInfo.setCl_scwps(scwps.getText().toString().trim());
-                    hcInfo.setZh_ryxx(zh_ryxx.trim());
+                    hcInfo.setZh_ryxx(zh_ryxx.trim().toUpperCase());
                     Log.e("zhryxx","===="+zh_ryxx);
                     zh_ryxx = "";
                     if(wpMap.size()>0){
@@ -398,6 +405,7 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
         View newLayout = inflater.inflate(R.layout.add_view_item, null);
         EditText sjh = (EditText) newLayout.findViewById(R.id.sjhm);
         EditText sfzh = (EditText) newLayout.findViewById(R.id.sfzh);
+        TextView dj_sfzh = (TextView) newLayout.findViewById(R.id.dj_sfzh);
         //sfsj = (EditText) newLayout.findViewById(R.id.sfsj);
         if(id_num==20000){
             id_num = 0;
@@ -405,6 +413,7 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
         newLayout.setTag("layout:"+id_num);
         sjh.setTag("sjhm:"+id_num);
         sfzh.setTag("sfzh:"+id_num);
+        dj_sfzh.setTag("dj_sfzh:"+id_num);
         info_view_list.add(newLayout);
         sj_f = this.getDrawable(R.drawable.sj_f);
         sj_t = this.getDrawable(R.drawable.sj_t);
@@ -413,6 +422,7 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
         sj_btn.setTag("sj:"+id_num);
         del_btn.setTag(id_num);
         del_btn.setOnClickListener(vClick);
+        dj_sfzh.setOnClickListener(djClick);
         sj_btn_list.add(sj_btn);
         sfsjMap.put((String)sj_btn.getTag(),"0");//默认不是司机
         id_num++;
@@ -457,8 +467,8 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
                     if(!(entry.getKey().equalsIgnoreCase((String)tag))){
                         sfsjMap.put(entry.getKey(),"0");
                     }
-                    Log.e("mapkkkkk","==="+entry.getKey());
-                    Log.e("mapvvvvv","==="+entry.getValue());
+                    //Log.e("mapkkkkk","==="+entry.getKey());
+                    //Log.e("mapvvvvv","==="+entry.getValue());
                 }
 
             }
@@ -490,4 +500,74 @@ public class ZhhcActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
+
+    //nfc读卡点击
+    View.OnClickListener djClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            final Object tag = v.getTag();
+            if (tag!=null){
+                String ediTag = "";
+                ediTag = "sfzh:"+((String)tag).substring(((String)tag).indexOf(":")+1);
+                //Log.e("ttttttaaaagggg","===="+tag);
+                //Log.e("eeettttttaaaagggg","===="+ediTag);
+                TextView temp_texv = v.findViewWithTag(tag);
+                ViewGroup view = (ViewGroup)temp_texv.getParent();
+                djsfzhTex = (EditText) view.findViewWithTag(ediTag);//绑定获取身份证号输入框
+                //开启读卡插件
+                Intent intent = new Intent("cybertech.pstore.intent.action.NFC_READER");
+                intent.setPackage("cn.com.cybertech.nfc.reader");
+                startActivity(intent);
+            }else {
+                Toast.makeText(ZhhcActivity.this, "开启插件失败，请手动输入身份证号", Toast.LENGTH_LONG).show();
+            }
+
+
+            }
+    };
+    //nfc读卡
+    /*通过NFC读取身份证信息成功*/
+    public static final String ACTION_NFC_READ_IDCARD_SUCCESS = "cybertech.pstore.intent.action.NFC_READ_IDCARD_SUCCESS";
+    /*通过NFC读取身份证信息失败*/
+    public static final String ACTION_NFC_READ_IDCARD_FAILURE = "cybertech.pstore.intent.action.NFC_READ_IDCARD_FAILURE";
+    public void onDestroy() {
+        super.onDestroy();
+        unregister();
+    }
+    private void register() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_NFC_READ_IDCARD_SUCCESS);
+        filter.addAction(ACTION_NFC_READ_IDCARD_FAILURE);
+        this.registerReceiver(mReceiver, filter);
+    }
+    private void unregister() {
+        this.unregisterReceiver(mReceiver);
+    }
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Bundle data = intent.getExtras();
+            if (ACTION_NFC_READ_IDCARD_SUCCESS.equals(action)) {
+                // TODO: 获取身份证数据成功
+                showContent2(data);
+            } else if (ACTION_NFC_READ_IDCARD_FAILURE.equals(action)) {
+                // TODO: 获取身份证数据失败
+                Toast.makeText(ZhhcActivity.this, "读取身份信息失败，请手动输入身份证号", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+    protected void showContent2(Bundle data) {
+        if (data != null) {
+            StringBuilder sb = new StringBuilder();
+            for (String key : data.keySet()) {
+                if(key.equalsIgnoreCase("identity")){
+                    sb.append(data.get(key));
+                }
+            }
+            djsfzhTex.setText(sb.toString());
+        }
+    }
+
 }

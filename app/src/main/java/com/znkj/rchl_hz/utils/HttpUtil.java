@@ -193,6 +193,8 @@ public class HttpUtil {
                     }else if(hcInfo.getSjlx().equalsIgnoreCase("abqx")){
                         hcJSON.put("sjlx",hcInfo.getSjlx());
                         hcJSON.put("hcr_sfzh",hcInfo.getHcr_sfzh());
+                    }else if(hcInfo.getSjlx().equalsIgnoreCase("hcdd")){
+                        hcJSON.put("sjlx",hcInfo.getSjlx());
                     }
                     String content = String.valueOf(hcJSON);
 

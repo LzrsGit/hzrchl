@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -119,6 +120,12 @@ public class JwhcActivity extends AppCompatActivity implements View.OnClickListe
                                 //Toast.makeText(v.getContext(), "拍一张" , Toast.LENGTH_SHORT).show();
                                 autoObtainCameraPermission("id1");
                             }
+                        }).addMenu("取消选择", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                d5.dismiss();
+                                clearImageview("id1");
+                            }
                         }).create();
                 d5.show();
             }
@@ -142,6 +149,12 @@ public class JwhcActivity extends AppCompatActivity implements View.OnClickListe
                                 d5.dismiss();
                                 //Toast.makeText(v.getContext(), "拍一张" , Toast.LENGTH_SHORT).show();
                                 autoObtainCameraPermission("id2");
+                            }
+                        }).addMenu("取消选择", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                d5.dismiss();
+                                clearImageview("id2");
                             }
                         }).create();
                 d5.show();
@@ -331,6 +344,32 @@ public class JwhcActivity extends AppCompatActivity implements View.OnClickListe
         view.setImageBitmap(bitmap);
     }
 
+    private void clearImageview(String imgId) {
+        ImageView view = photo1;
+        switch (imgId){
+            case "id1":
+                view = photo1;
+                break;
+            case "id2":
+                view = photo2;
+                break;
+            default:
+        }
+        //设置为默认图片
+        Bitmap gameStatusBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.addphoto);
+        view.setImageBitmap(gameStatusBitmap);
+        if(imgId.equalsIgnoreCase("id2")){
+            encodeString2 = "";
+        }else if(imgId.equalsIgnoreCase("id1")){
+            encodeString = "";
+        }
+
+        //判断photo2是否显示添加照片
+        if("".equalsIgnoreCase(encodeString.trim())&&"".equalsIgnoreCase(encodeString2.trim())){
+            photo2.setVisibility(View.INVISIBLE);
+        }
+    }
+
     /**
      * 检查设备是否存在SDCard的工具方法
      */
@@ -383,6 +422,16 @@ public class JwhcActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void clearAll(){
+        gjdq.setText("");
+        zjzl.setText("");
+        zjhm.setText("");
+        gjdqDm = "";
+        zjzlDm = "";
+        clearImageview("id2");
+        clearImageview("id1");
+    }
+
     public void SubmitInfo() {
         if (gjdqDm.trim().equalsIgnoreCase("")
                 || zjzlDm.trim().equalsIgnoreCase("")
@@ -405,7 +454,7 @@ public class JwhcActivity extends AppCompatActivity implements View.OnClickListe
 //                hcInfo.setHcwd(localArr[1]);
                 hcInfo.setBhcr_jnjw("02");
                 hcInfo.setBhcr_zjlx(zjzlDm);
-                hcInfo.setBhcr_sfzh(zjhm.getText().toString());
+                hcInfo.setBhcr_sfzh(zjhm.getText().toString().toUpperCase());
                 hcInfo.setBhcr_hjszd(gjdqDm);
                 hcInfo.setBhcr_zp(encodeString);
                 hcInfo.setBhcr_zp2(encodeString2);
@@ -446,6 +495,7 @@ public class JwhcActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(JwhcActivity.this, "图片编译成功", Toast.LENGTH_LONG).show();
                     break;
                 case 1:  //访问成功，有数据
+                    clearAll();
                     Intent intent = new Intent(JwhcActivity.this,
                             ResultActivity.class);
                     intent.putExtra("result", msg.obj.toString());

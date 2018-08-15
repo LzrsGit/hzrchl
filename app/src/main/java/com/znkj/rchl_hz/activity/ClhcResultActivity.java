@@ -48,6 +48,9 @@ public class ClhcResultActivity extends AppCompatActivity {
         endBtn.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
+                  Intent intent = new Intent(ClhcResultActivity.this,
+                          ClhcActivity.class);
+                  startActivity(intent);
                   ClhcResultActivity.this.finish();
               }
         });

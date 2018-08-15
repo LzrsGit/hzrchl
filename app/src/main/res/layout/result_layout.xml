@@ -5,12 +5,21 @@
 
     <include layout="@layout/resultbar_layout"
              android:id="@+id/include"></include>
+    <ScrollView
+        android:id="@+id/scrview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include"
+        android:fadingEdge="vertical"
+        android:scrollbars="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/line_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include"
         android:orientation="vertical">
 
         <LinearLayout
@@ -249,5 +258,6 @@
             <!--android:textColor="#ffffff"-->
             <!--android:text="随行人员检查"/>-->
     <!--</LinearLayout>-->
-
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

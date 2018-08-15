@@ -59,6 +59,9 @@ public class ZhhcResultActivity extends AppCompatActivity {
         endBtn.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
+                  Intent intent = new Intent(ZhhcResultActivity.this,
+                          ZhhcActivity.class);
+                  startActivity(intent);
                   ZhhcResultActivity.this.finish();
               }
         });

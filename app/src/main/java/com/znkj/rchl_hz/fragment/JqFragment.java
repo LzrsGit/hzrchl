@@ -2,11 +2,14 @@ package com.znkj.rchl_hz.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +33,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.znkj.rchl_hz.HttpCallbackListener;
@@ -59,6 +63,7 @@ public class JqFragment extends Fragment {
     private Button addBtn;
     private EditText jqhc_sjh;
     private EditText jqhc_sfzh;
+    private TextView dj_sfzh;
     private ImageView photo1;
     private ImageView photo2;
 
@@ -66,6 +71,7 @@ public class JqFragment extends Fragment {
     String encodeString2 = "";
     private String[] localArr = {"",""};
     //private ImageView photo3;
+    //private int sfxs=0;
 
     private getInfoUtils getInfo;
     private final int CODE = 1;
@@ -102,6 +108,8 @@ public class JqFragment extends Fragment {
                     //Log.e("p2p===",encodeString2);
                     break;
                 case 1:  //访问成功，有数据
+                    //清除数据
+                    clearAll();
                     Intent intent = new Intent(getActivity(),
                             ResultActivity.class);
                     intent.putExtra("result", msg.obj.toString());
@@ -121,14 +129,72 @@ public class JqFragment extends Fragment {
         }
     };
 
+
+    /*通过NFC读取身份证信息成功*/
+    public static final String ACTION_NFC_READ_IDCARD_SUCCESS = "cybertech.pstore.intent.action.NFC_READ_IDCARD_SUCCESS";
+    /*通过NFC读取身份证信息失败*/
+    public static final String ACTION_NFC_READ_IDCARD_FAILURE = "cybertech.pstore.intent.action.NFC_READ_IDCARD_FAILURE";
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        register();
+    }
+    public void onDestroy() {
+        super.onDestroy();
+        unregister();
+    }
+    private void register() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_NFC_READ_IDCARD_SUCCESS);
+        filter.addAction(ACTION_NFC_READ_IDCARD_FAILURE);
+        getContext().registerReceiver(mReceiver, filter);
+    }
+    private void unregister() {
+        getContext().unregisterReceiver(mReceiver);
+    }
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Bundle data = intent.getExtras();
+            Log.i(TAG, "onReceive: " + action + ", " + data);
+            if (ACTION_NFC_READ_IDCARD_SUCCESS.equals(action)) {
+                // TODO: 获取身份证数据成功
+                showContent2(data);
+            } else if (ACTION_NFC_READ_IDCARD_FAILURE.equals(action)) {
+                // TODO: 获取身份证数据失败
+                Toast.makeText(getActivity(), "读取身份信息失败，请手动输入身份证号", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+    protected void showContent2(Bundle data) {
+        if (data != null) {
+            StringBuilder sb = new StringBuilder();
+            for (String key : data.keySet()) {
+                if(key.equalsIgnoreCase("identity")){
+                    sb.append(data.get(key));
+                }
+            }
+            jqhc_sfzh.setText(sb.toString());
+        }
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.jq_fragment, container, false);
-
         initView(view);
+
+        dj_sfzh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("cybertech.pstore.intent.action.NFC_READER");
+                intent.setPackage("cn.com.cybertech.nfc.reader");
+                startActivity(intent);
+            }
+        });
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -184,6 +250,12 @@ public class JqFragment extends Fragment {
                                 //Toast.makeText(v.getContext(), "拍一张" , Toast.LENGTH_SHORT).show();
                                 autoObtainCameraPermission("id1");
                             }
+                        }).addMenu("取消选择", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                d5.dismiss();
+                                clearImageview("id1");
+                            }
                         }).create();
                 //photo2.setVisibility(View.VISIBLE);
                 d5.show();
@@ -210,6 +282,13 @@ public class JqFragment extends Fragment {
                                 //Toast.makeText(v.getContext(), "拍一张" , Toast.LENGTH_SHORT).show();
                                 autoObtainCameraPermission("id2");
                             }
+                        }).addMenu("取消选择", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                d5.dismiss();
+                                clearImageview("id2");
+
+                            }
                         }).create();
 
                 d5.show();
@@ -223,6 +302,7 @@ public class JqFragment extends Fragment {
     private void initView(View v){
         jqhc_sjh = (EditText) v.findViewById(R.id.jqhc_sjh);
         jqhc_sfzh = (EditText) v.findViewById(R.id.jqhc_sfzh);
+        dj_sfzh = (TextView) v.findViewById(R.id.dj_sfzh);
         photo1 = (ImageView)v.findViewById(R.id.photo1);
         photo2 = (ImageView)v.findViewById(R.id.photo2);
         //photo3 = (ImageView)v.findViewById(R.id.photo3);
@@ -231,7 +311,14 @@ public class JqFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+
+    public void clearAll(){
+        jqhc_sjh.setText("");
+        jqhc_sfzh.setText("");
+        clearImageview("id2");
+        clearImageview("id1");
     }
 
     public void SubmitInfo() {
@@ -257,7 +344,7 @@ public class JqFragment extends Fragment {
 //                    hcInfo.setHcjd(localArr[0]);
 //                    hcInfo.setHcwd(localArr[1]);
                     hcInfo.setBhcr_sjh(jqhc_sjh.getText().toString());
-                    hcInfo.setBhcr_sfzh(jqhc_sfzh.getText().toString());
+                    hcInfo.setBhcr_sfzh(jqhc_sfzh.getText().toString().toUpperCase());
                     hcInfo.setBhcr_zp(encodeString);
                     hcInfo.setBhcr_zp2(encodeString2);
                     hcInfo.setBhcr_jnjw("01");
@@ -375,11 +462,10 @@ public class JqFragment extends Fragment {
                         byte[] encode = Base64.encode(bytes,Base64.DEFAULT);
                         encodeString = new String(encode);
                         //Log.e("encodeString:",encodeString);
-                        Log.e("encodeString:",""+encodeString.length());
+                        //Log.e("encodeString:",""+encodeString.length());
                         Message msg = new Message();
                         if(encodeString!=null&&!"".equalsIgnoreCase(encodeString)){
                             msg.what = 2;
-
                         }else {
                             msg.what = 0;
                         }
@@ -400,7 +486,7 @@ public class JqFragment extends Fragment {
                         //base64 encode
                         byte[] encode = Base64.encode(bytes,Base64.DEFAULT);
                         encodeString2 = new String(encode);
-                        Log.e("encodeString2:",""+encodeString2.length());
+                        //Log.e("encodeString2:",""+encodeString2.length());
                         Message msg = new Message();
                         if(encodeString2!=null&&!"".equalsIgnoreCase(encodeString2)){
                             msg.what = 2;
@@ -438,6 +524,39 @@ public class JqFragment extends Fragment {
     private void showImages(Bitmap bitmap,ImageView view) {
         //photo.setImageBitmap(bitmap);
         view.setImageBitmap(bitmap);
+    }
+
+    private void clearImageview(String imgId) {
+        ImageView view = photo1;
+        switch (imgId){
+            case "id1":
+                view = photo1;
+                break;
+            case "id2":
+                view = photo2;
+                break;
+            default:
+        }
+        //销毁图片
+//        BitmapDrawable drawable = (BitmapDrawable)view.getDrawable();
+//        Bitmap bmp = drawable.getBitmap();
+//        if (null != bmp && !bmp.isRecycled()){
+//            bmp.recycle();
+//            bmp = null;
+//        }
+        //设置为默认图片
+        Bitmap gameStatusBitmap =BitmapFactory.decodeResource(getResources(), R.drawable.addphoto);
+        view.setImageBitmap(gameStatusBitmap);
+        if(imgId.equalsIgnoreCase("id2")){
+            encodeString2 = "";
+        }else if(imgId.equalsIgnoreCase("id1")){
+            encodeString = "";
+        }
+
+        //判断photo2是否显示添加照片
+        if("".equalsIgnoreCase(encodeString.trim())&&"".equalsIgnoreCase(encodeString2.trim())){
+            photo2.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**

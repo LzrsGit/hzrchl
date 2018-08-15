@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity
                         clearAddress();
                     }else {
                         saveAddress("address",hcdd);
-                        saveHistory("history",hcdd);
+                        //saveHistory("history",hcdd);
                     }
                     hcdd.clearFocus();
                     //输入框失焦
@@ -143,9 +143,12 @@ public class HomeActivity extends AppCompatActivity
         ryhc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(hcdd.getText().toString().trim().equalsIgnoreCase("")){
-                    Toast.makeText(HomeActivity.this, "请输入核查地点", Toast.LENGTH_LONG).show();
+                if(hcdd.getText().toString().trim().length()<=4){
+                    Toast.makeText(HomeActivity.this, "核查地点应大于四个字", Toast.LENGTH_LONG).show();
+                    clearAddress();
                 }else {
+                    saveAddress("address",hcdd);
+                    //saveHistory("history",hcdd);
                     Intent intent = new Intent(HomeActivity.this,
                             MidActivity.class);
                     startActivity(intent);
@@ -155,9 +158,12 @@ public class HomeActivity extends AppCompatActivity
         clhc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(hcdd.getText().toString().trim().equalsIgnoreCase("")){
-                    Toast.makeText(HomeActivity.this, "请输入核查地点", Toast.LENGTH_LONG).show();
+                if(hcdd.getText().toString().trim().length()<=4){
+                    Toast.makeText(HomeActivity.this, "核查地点应大于四个字", Toast.LENGTH_LONG).show();
+                    clearAddress();
                 }else {
+                    saveAddress("address",hcdd);
+                    //saveHistory("history",hcdd);
                     Intent intent = new Intent(HomeActivity.this,
                             ClhcActivity.class);
                     startActivity(intent);
@@ -167,9 +173,12 @@ public class HomeActivity extends AppCompatActivity
         zhhc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(hcdd.getText().toString().trim().equalsIgnoreCase("")){
-                    Toast.makeText(HomeActivity.this, "请输入核查地点", Toast.LENGTH_LONG).show();
+                if(hcdd.getText().toString().trim().length()<=4){
+                    Toast.makeText(HomeActivity.this, "核查地点应大于四个字", Toast.LENGTH_LONG).show();
+                    clearAddress();
                 }else {
+                    saveAddress("address",hcdd);
+                    //saveHistory("history",hcdd);
                     Intent intent = new Intent(HomeActivity.this,
                             ZhhcActivity.class);
                     startActivity(intent);
@@ -303,21 +312,23 @@ public class HomeActivity extends AppCompatActivity
 
             }
 
-        }  else if (id == R.id.nav_xl) {
-            if (img==null){
-                Toast.makeText(HomeActivity.this, "null", Toast.LENGTH_LONG).show();
-            }else{
-                SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("sys_bb", "41");
-                editor.commit();
-                img.setImageResource(R.drawable.lm);
-                img.setBackgroundColor(Color.parseColor("#1FA0FE"));
-                findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor("#1FA0FE"));
-                StatusBarCompat.setStatusBarColor(this, Color.parseColor("#1FA0FE"), false);
-            }
-
-        } else if (id == R.id.nav_download) {
+        }
+//        else if (id == R.id.nav_xl) {
+//            if (img==null){
+//                Toast.makeText(HomeActivity.this, "null", Toast.LENGTH_LONG).show();
+//            }else{
+//                SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sp.edit();
+//                editor.putString("sys_bb", "41");
+//                editor.commit();
+//                img.setImageResource(R.drawable.lm);
+//                img.setBackgroundColor(Color.parseColor("#1FA0FE"));
+//                findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor("#1FA0FE"));
+//                StatusBarCompat.setStatusBarColor(this, Color.parseColor("#1FA0FE"), false);
+//            }
+//
+//        }
+        else if (id == R.id.nav_download) {
             getData("hjd");
             getData("gjdq");
             getData("zjzl");
@@ -338,18 +349,50 @@ public class HomeActivity extends AppCompatActivity
      * @param auto 要操作的AutoCompleteTextView
      */
     private void initAutoComplete(String field,AutoCompleteTextView auto) {
-        SharedPreferences sp = getSharedPreferences("addressHis", MODE_PRIVATE);
-        String longhistory = sp.getString("history", "");
+//        SharedPreferences sp = getSharedPreferences("addressHis", MODE_PRIVATE);
+//        String longhistory = sp.getString("history", "");
+        SharedPreferences sp = getSharedPreferences("user_info", MODE_PRIVATE);
+
+        //获取核查地点
+        JSONObject dateJson = null;
+        JSONObject tempJson = null;
+        JSONArray jsArr = null;
+        String dataStr = sp.getString("hcdd", "");
+        String longhistory = "";
+        if(!"".equalsIgnoreCase(dataStr.trim())){
+            try {
+                dateJson = new JSONObject(dataStr);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        if(dateJson!=null){
+            try {
+                //Log.e("jjjjjjjjj","==="+dateJson.get("res"));
+                jsArr = (JSONArray) dateJson.get("res");
+                for (int j=0; j<jsArr.length(); j++){
+                    tempJson = (JSONObject)jsArr.get(j);
+                    try {
+                        longhistory = ""+URLDecoder.decode((String)tempJson.get("hcdd"),"UTF-8");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+
         String[]  hisArrays = longhistory.split(",");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.auto_search_item, hisArrays);
         //只保留最近的50条的记录
-        if(hisArrays.length > 50){
-            String[] newArrays = new String[50];
-            System.arraycopy(hisArrays, 0, newArrays, 0, 50);
-            adapter = new ArrayAdapter<String>(this,
-                    R.layout.auto_search_item, newArrays);
-        }
+//        if(hisArrays.length > 50){
+//            String[] newArrays = new String[50];
+//            System.arraycopy(hisArrays, 0, newArrays, 0, 50);
+//            adapter = new ArrayAdapter<String>(this,
+//                    R.layout.auto_search_item, newArrays);
+//        }
         auto.setAdapter(adapter);
         auto.setDropDownHeight(550);
         auto.setThreshold(1);
@@ -357,6 +400,7 @@ public class HomeActivity extends AppCompatActivity
         //auto.sethi(Color.parseColor("#333333"));
     }
 
+    //取消保存历史地址功能，地址改为字典项，从后台获取
     private void saveHistory(String field,AutoCompleteTextView auto) {
         String text = auto.getText().toString();
         SharedPreferences sp = getSharedPreferences("addressHis", MODE_PRIVATE);

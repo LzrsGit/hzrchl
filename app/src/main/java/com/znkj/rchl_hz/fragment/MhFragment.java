@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -111,15 +112,15 @@ public class MhFragment extends Fragment {
                     Toast.makeText(getActivity(), "图片编译成功", Toast.LENGTH_LONG).show();
                     break;
                 case 1:  //访问成功，有数据
+                    //清除数据
+                    clearAll();
                     Intent intent = new Intent(getActivity(),
                             ResultActivity.class);
                     intent.putExtra("result", msg.obj.toString());
                     startActivity(intent);
                     break;
                 case 0:
-                    //String result = msg.obj.toString();
                     String result = "提交失败！";
-                    //Log.e("bbbbuuuuuggggg","====="+msg.obj.toString());
                     Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
                     break;
                 default:
@@ -267,6 +268,12 @@ public class MhFragment extends Fragment {
                                 //Toast.makeText(v.getContext(), "拍一张" , Toast.LENGTH_SHORT).show();
                                 autoObtainCameraPermission("id1");
                             }
+                        }).addMenu("取消选择", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                d5.dismiss();
+                                clearImageview("id1");
+                            }
                         }).create();
                 //photo2.setVisibility(View.VISIBLE);
                 d5.show();
@@ -292,6 +299,12 @@ public class MhFragment extends Fragment {
                                 d5.dismiss();
                                 //Toast.makeText(v.getContext(), "拍一张" , Toast.LENGTH_SHORT).show();
                                 autoObtainCameraPermission("id2");
+                            }
+                        }).addMenu("取消选择", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                d5.dismiss();
+                                clearImageview("id2");
                             }
                         }).create();
 
@@ -494,6 +507,32 @@ public class MhFragment extends Fragment {
         view.setImageBitmap(bitmap);
     }
 
+    private void clearImageview(String imgId) {
+        ImageView view = photo1;
+        switch (imgId){
+            case "id1":
+                view = photo1;
+                break;
+            case "id2":
+                view = photo2;
+                break;
+            default:
+        }
+        //设置为默认图片
+        Bitmap gameStatusBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.addphoto);
+        view.setImageBitmap(gameStatusBitmap);
+        if(imgId.equalsIgnoreCase("id2")){
+            encodeString2 = "";
+        }else if(imgId.equalsIgnoreCase("id1")){
+            encodeString = "";
+        }
+
+        //判断photo2是否显示添加照片
+        if("".equalsIgnoreCase(encodeString.trim())&&"".equalsIgnoreCase(encodeString2.trim())){
+            photo2.setVisibility(View.INVISIBLE);
+        }
+    }
+
     /**
      * 检查设备是否存在SDCard的工具方法
      */
@@ -564,6 +603,21 @@ public class MhFragment extends Fragment {
     }
     //时间选择器-显示时间
 
+    //清除数据
+    public void clearAll(){
+        mhhc_sjh.setText("");
+        mhhc_hjd.setText("");
+        mhhc_kssj.setText("");
+        mhhc_jzsj.setText("");
+        mhhc_xm.setText("");
+        mhhc_mz.setText("");
+        mzDm = "";
+        mzMc = "";
+        hjdMc = "";
+        hjdDm = "";
+        clearImageview("id2");
+        clearImageview("id1");
+    }
     //提交方法
     public void SubmitInfo() {
         if (//mhhc_sjh.getText().toString().equals("")
